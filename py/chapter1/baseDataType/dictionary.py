@@ -34,6 +34,14 @@ tinydict = {'name': 'jacky', 'no': 1, 'site': 'www.jacky.com'}
 # 打印字典类型
 print(tinydict)  # {'name': 'jacky', 'no': 1, 'site': 'www.jacky.com'}
 
+#遍历字典,在遍历字典的时候，默认的取的是key
+for key in  tinydict:
+    print("key:"+key+",value:"+str(tinydict[key]),end="") #key:name,value:jackykey:no,value:1key:site,value:www.jacky.com
+
+print("")
+
+
+
 # 获取字典数据的所有key键值，这个完全与java的map操作一致
 keys = tinydict.keys();
 print(keys)  # dict_keys(['name', 'no', 'site'])
