@@ -232,10 +232,3 @@ def demo10(srcFileName, m):
 
 
 demo10("demo1.txt", "r")
-
-
-
-
-
-
-
