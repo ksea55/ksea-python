@@ -1,101 +1,10 @@
 # Python3  OS 操作 文件 与 文件目录的方法大全
 # os 模块提供了非常丰富的方法用来处理文件和目录。常用的方法如下表所示：
 
-import os
 
-"""
-1 os.access(path, mode) 检验权限模式
 
-概述
-os.access() 方法使用当前的uid/gid尝试访问路径。大部分操作使用有效的 uid/gid, 因此运行环境可以在 suid/sgid 环境尝试。
-语法
-access()方法语法格式如下：
-os.access(path, mode);
-参数
-path -- 要用来检测是否有访问权限的路径。
-mode -- mode为F_OK，测试存在的路径，或者它可以是包含R_OK, W_OK和X_OK或者R_OK, W_OK和X_OK其中之一或者更多。
-os.F_OK: 作为access()的mode参数，测试path是否存在。
-os.R_OK: 包含在access()的mode参数中 ， 测试path是否可读。
-os.W_OK 包含在access()的mode参数中 ， 测试path是否可写。
-os.X_OK 包含在access()的mode参数中 ，测试path是否可执行。
-返回值
-如果允许访问返回 True , 否则返回False。
 
-"""
-fok = os.access("demo1.txt", os.F_OK)
-print(fok)  # True
 
-rok = os.access("demo1.txt", os.F_OK)
-print(rok)  # True
-
-wok = os.access("demo1.txt", os.W_OK)
-print(wok)  # True
-
-xok = os.access("demo1.txt", os.X_OK)
-print(xok)  # True
-
-rwx = os.access("demo1.txt", os.F_OK | os.R_OK | os.W_OK)  # 等同于rwx=os.access("demo1.txt",os.F_OK or os.R_OK or os.W_OK)
-print(rwx)  # True
-print("--1----------------------------------------------------------------------------------------")
-"""
-2 os.chdir(path) 改变当前工作目录
-
-概述
-os.chdir() 方法用于改变当前工作目录到指定的路径。
-
-语法
-chdir()方法语法格式如下：
-
-os.chdir(path)
-
-参数
-path -- 要切换到的新路径。
-返回值
-如果允许访问返回 True , 否则返回False。
-
-"""
-# 获取当前路径
-currPath = os.getcwd()
-print("currPath: ", currPath)  # currPath:  D:\ksea\ksea-python\py\chapter4
-
-# 将其当前路径改变到chPath路径
-chPath = "D:\ksea\ksea-python\py\chapter2"
-os.chdir(chPath)
-# 获取改变之后的路径
-print("changePath: ", os.getcwd())  # changePath:  D:\ksea\ksea-python\py\chapter2
-
-print("--2-------------------------------------------------------------------------")
-
-"""
- 3 os.chflags(path, flags) 设置路径的标记为数字标记。
- 
-概述
-os.chflags() 方法用于设置路径的标记为数字标记。多个标记可以使用 OR 来组合起来。
-只支持在 Unix 下使用。
-语法
-chflags()方法语法格式如下：
-os.chflags(path, flags)
-参数
-path -- 文件名路径或目录路径。
-flags -- 可以是以下值：
-        stat.UF_NODUMP: 非转储文件
-        stat.UF_IMMUTABLE: 文件是只读的
-        stat.UF_APPEND: 文件只能追加内容
-        stat.UF_NOUNLINK: 文件不可删除
-        stat.UF_OPAQUE: 目录不透明，需要通过联合堆栈查看
-        stat.SF_ARCHIVED: 可存档文件(超级用户可设)
-        stat.SF_IMMUTABLE: 文件是只读的(超级用户可设)
-        stat.SF_APPEND: 文件只能追加内容(超级用户可设)
-        stat.SF_NOUNLINK: 文件不可删除(超级用户可设)
-        stat.SF_SNAPSHOT: 快照文件(超级用户可设)
-返回值
-
-该方法没有返回值。
-"""
-import stat
-
-# os.chflags("dump.pkl", stat.UF_APPEND or stat.UF_IMMUTABLE)
-# print(os)  # AttributeError: module 'os' has no attribute 'chflags' 因为我这里使用的win os 系统
 
 print("--3-------------------------------------------------------------------------")
 
@@ -135,7 +44,50 @@ stat.S_IWRITE: windows下取消只读
 v = os.stat("D:\ksea\ksea-python\py\chapter4\demo1.txt")
 print(v)
 
-# 5 os.chown(path, uid, gid) 更改文件所有者
+
+"""
+5 os.chown(path, uid, gid) 更改文件所有者
+语法
+chmod()方法语法格式如下：
+os.chmod(path, mode)
+参数
+path -- 文件名路径或目录路径。
+flags -- 可用以下选项按位或操作生成， 目录的读权限表示可以获取目录里文件名列表， ，执行权限表示可以把工作目录切换到此目录 ，删除添加目录里的文件必须同时有写和执行权限 ，文件权限以用户id->组id->其它顺序检验,最先匹配的允许或禁止权限被应用。
+stat.S_IXOTH: 其他用户有执行权0o001
+stat.S_IWOTH: 其他用户有写权限0o002
+stat.S_IROTH: 其他用户有读权限0o004
+stat.S_IRWXO: 其他用户有全部权限(权限掩码)0o007
+stat.S_IXGRP: 组用户有执行权限0o010
+stat.S_IWGRP: 组用户有写权限0o020
+stat.S_IRGRP: 组用户有读权限0o040
+stat.S_IRWXG: 组用户有全部权限(权限掩码)0o070
+stat.S_IXUSR: 拥有者具有执行权限0o100
+stat.S_IWUSR: 拥有者具有写权限0o200
+stat.S_IRUSR: 拥有者具有读权限0o400
+stat.S_IRWXU: 拥有者有全部权限(权限掩码)0o700
+stat.S_ISVTX: 目录里文件目录只有拥有者才可删除更改0o1000
+stat.S_ISGID: 执行此文件其进程有效组为文件所在组0o2000
+stat.S_ISUID: 执行此文件其进程有效用户为文件所有者0o4000
+stat.S_IREAD: windows下设为只读
+stat.S_IWRITE: windows下取消只读
+返回值
+该方法没有返回值。
+实例
+以下实例演示了 chmod() 方法的使用：
+#!/usr/bin/python3
+
+import os, sys, stat
+
+# 假定 /tmp/foo.txt 文件存在，设置文件可以通过用户组执行
+
+os.chmod("/tmp/foo.txt", stat.S_IXGRP)
+
+# 设置文件可以被其他用户写入
+os.chmod("/tmp/foo.txt", stat.S_IWOTH)
+
+print ("修改成功!!"
+"""
+
 # 6 os.chroot(path) 改变当前进程的根目录
 # 7 os.close(fd) 关闭文件描述符 fd
 # 8 os.closerange(fd_low, fd_high) 关闭所有文件描述符，从 fd_low(包含) 到 fd_high(不包含), 错误会忽略
