@@ -12,7 +12,6 @@ class DerivedClassName(Base1, Base2, Base3):
 
 
 # !/usr/bin/python3
-
 # 类定义
 class people:
     # 定义基本属性
